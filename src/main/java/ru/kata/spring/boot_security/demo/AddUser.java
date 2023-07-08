@@ -3,12 +3,12 @@ package ru.kata.spring.boot_security.demo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import ru.kata.spring.boot_security.demo.service.RoleServiceImp;
-import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
+import ru.kata.spring.boot_security.demo.service.RoleServiceImp;
+import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -29,8 +29,8 @@ public class AddUser implements CommandLineRunner {
         Role adminTest = new Role(2L, "ROLE_ADMIN");
         roleServiceImp.addRole(userTest);
         roleServiceImp.addRole(adminTest);
-        Set<Role> userSet = Stream.of(userTest).collect(Collectors.toSet());
-        Set<Role> adminSet = Stream.of(adminTest, userTest).collect(Collectors.toSet());
+        List<Role> userSet = Stream.of(userTest).collect(Collectors.toList());
+        List<Role> adminSet = Stream.of(adminTest, userTest).collect(Collectors.toList());
 
         User user = new User("user", "userLastname", 30, "user", userSet);
         User admin = new User("admin", "admin", 20, "admin", adminSet);

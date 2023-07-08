@@ -1,15 +1,15 @@
 package ru.kata.spring.boot_security.demo.models;
 
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Set;
+import java.io.Serializable;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {
+public class User implements UserDetails, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,15 +28,28 @@ public class User implements UserDetails {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable
-    private Set<Role> roles;
+    private List<Role> roles;
 
     public User() {
     }
 
-    public User(String username, String surname, int age, String password, Set<Role> roles) {
+    public User(String username, String surname, int age, String password, List<Role> roles) {
         this.username = username;
         this.surname = surname;
         this.age = age;
+        this.password = password;
+        this.roles = roles;
+    }
+
+    public User(String username, int age, String password, List<Role> roles) {
+        this.username = username;
+        this.password = password;
+        this.age = age;
+        this.roles = roles;
+    }
+
+    public User(String username, String password, List<Role> roles) {
+        this.username = username;
         this.password = password;
         this.roles = roles;
     }
@@ -74,9 +87,12 @@ public class User implements UserDetails {
         this.age = age;
     }
 
+
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+    public List<Role> getAuthorities() {
+        return roles.stream()
+                .map(role -> new Role(role.getRole()))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -116,11 +132,24 @@ public class User implements UserDetails {
         this.passwordConfirm = passwordConfirm;
     }
 
-    public Set<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", surname='" + surname + '\'' +
+                ", age=" + age +
+                ", password='" + password + '\'' +
+                ", passwordConfirm='" + passwordConfirm + '\'' +
+                ", roles=" + roles +
+                '}';
     }
 }
