@@ -3,6 +3,10 @@ package ru.kata.spring.boot_security.demo.models;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,14 +17,21 @@ public class User implements UserDetails, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
-    @Column(unique = true)
+    @Column(unique = true, name = "username")
+    @NotEmpty(message = "Имя не может быть пустым")
+    @Pattern(regexp = "[A-zA-я]+", message = "Имя может содержать только буквы")
+    @Size(min = 2, max = 30, message = "Не менее 2 символов и не более 30")
     private String username;
-
+    @Column(unique = true, name = "surname")
+    @NotEmpty(message = "Фамилия не может быть пустым")
+    @Pattern(regexp = "[A-zA-я]+", message = "Фамилия может содержать только буквы")
+    @Size(min = 2, max = 30, message = "В фамилии не менее 2 символов и не более 30")
     private String surname;
-
+    @Min(value = 1, message = "Введите корректный возраст")
     private int age;
-
+    @Size(min = 2, message = "Ни меньше 2 символов")
     private String password;
 
     @Transient
