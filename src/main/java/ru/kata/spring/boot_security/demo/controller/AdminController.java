@@ -32,7 +32,6 @@ public class AdminController {
         return "users";
     }
 
-
     @GetMapping("/{id}")
     public String showOneUser(@PathVariable("id") long id1, ModelMap model) {
         model.addAttribute("user", userService.getUser(id1));
@@ -52,7 +51,6 @@ public class AdminController {
         userService.addUser(user);
         return "redirect:/admin";
     }
-
 
     @GetMapping("/{id}/edit")
     public String edit(ModelMap model, @PathVariable("id") long id) {

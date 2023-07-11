@@ -31,7 +31,7 @@ public class User implements UserDetails, Serializable {
     private String surname;
     @Min(value = 1, message = "Введите корректный возраст")
     private int age;
-    @Size(min = 2, message = "Ни меньше 2 символов")
+    @Size(min = 2, message = "Не меньше 2 символов")
     private String password;
 
     @Transient
