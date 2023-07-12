@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,6 +12,13 @@
 <p th:text="${user.getSurname()}">VALUE</p>
 <p th:text="${user.getAge()}">VALUE</p>
 <br>
-<input type="button" value="Logout" onclick="window.location.href = 'logout'">
+<div sec:authorize="hasRole('ADMIN')">
+<a th:href="@{/admin/{id}/edit(id=${user.getId()})}">Edit user</a>
+<form th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}">
+    <input type="submit" value="Delete">
+</form>
+</div>
+    <br>
+    <input type="button" value="Logout" onclick="window.location.href = 'logout'">
 </body>
 </html>
