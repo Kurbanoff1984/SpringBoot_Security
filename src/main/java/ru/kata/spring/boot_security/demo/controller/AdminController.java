@@ -39,7 +39,7 @@ public class AdminController {
     }
 
     @GetMapping("/new")
-    public String newUser(@ModelAttribute("user") User user) {
+    public String newUser(@ModelAttribute("user") @Valid User user) {
         return "new";
     }
 
