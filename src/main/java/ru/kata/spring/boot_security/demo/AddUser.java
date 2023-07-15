@@ -8,6 +8,7 @@ import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.service.RoleServiceImp;
 import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -18,7 +19,7 @@ public class AddUser implements CommandLineRunner {
     private UserServiceImpl userServiceImp;
 
     @Autowired
-    public AddUser(RoleServiceImp roleServiceImp, UserServiceImpl userServiceImp) {
+    public AddUser(@Valid RoleServiceImp roleServiceImp, UserServiceImpl userServiceImp) {
         this.roleServiceImp = roleServiceImp;
         this.userServiceImp = userServiceImp;
     }
