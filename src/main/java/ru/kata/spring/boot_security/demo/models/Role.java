@@ -6,7 +6,12 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "role")
+@Table(
+        name = "roles",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "role")
+        }
+)
 public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +26,7 @@ public class Role implements GrantedAuthority {
     public Role() {
 
     }
+
 
     public Role(long id) {
         this.id = id;

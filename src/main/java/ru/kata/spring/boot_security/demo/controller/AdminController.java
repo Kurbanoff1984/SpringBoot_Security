@@ -30,6 +30,7 @@ public class AdminController {
     public String showAllUsers(ModelMap model) {
         model.addAttribute("users", userService.getAllUsers());
         return "users";
+
     }
 
     @GetMapping("/{id}")
@@ -41,12 +42,14 @@ public class AdminController {
     @GetMapping("/new")
     public String newUser(@ModelAttribute("user") @Valid User user) {
         return "new";
+
     }
 
     @PostMapping()
     public String create(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "/new";
+
 
         userService.addUser(user);
         return "redirect:/admin";

@@ -26,5 +26,4 @@ public class UserController {
         model.addAttribute("user", userServiceImp.findByUsername(principal.getName()));
         return "onlyuser";
     }
-
 }

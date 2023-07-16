@@ -11,7 +11,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "users")
+@Table(
+        name = "users",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "username")
+        }
+)
 public class User implements UserDetails, Serializable {
 
     @Id
@@ -34,8 +39,10 @@ public class User implements UserDetails, Serializable {
     @Transient
     private String passwordConfirm;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable
+    @ManyToMany
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "username"),
+            inverseJoinColumns = @JoinColumn(name = "role"))
     private List<Role> roles;
 
     public User() {

@@ -15,7 +15,8 @@ import java.util.List;
 
 @Service
 @Transactional
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService, UserDetailsService  {
+
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
@@ -58,6 +59,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         oldUserData.setRoles(user.getRoles());
     }
 
+    @Override
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
     public User findByUsername(String username) {
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username));
     }
@@ -69,6 +75,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(String.format("User '%s' not found", username));
         }
-        return new User(user.getUsername(), user.getPassword(), user.getAuthorities());
+       return new User(user.getUsername(), user.getPassword(), user.getAuthorities());
     }
 }
